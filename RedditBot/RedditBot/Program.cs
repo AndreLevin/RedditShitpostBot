@@ -8,10 +8,10 @@ namespace RedditBot
 {
     class Program
     {
-        public static string AuthInfoLocation;
         static void Main(string[] args)
         {
-            string AuthInfoLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\RedditBot.cfg";
+            AuthInformation.Refresh();
+            string test = AuthInformation.RedditAppId;
             Console.ReadLine();
         }
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RedditBot
 {
-    class AuthInformation
+    static class AuthInformation
     {
         public static string RedditUser { get; private set;}
         public static string RedditPassword { get; private set; }
@@ -15,7 +15,7 @@ namespace RedditBot
         public static string RedditAppSecret { get; private set; }
         static string[] CfgLines;
         static string CfgLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\RedditBot.cfg";
-        public bool Refresh(string fileLocation)
+        public static bool Refresh(string fileLocation)
         {
             RedditUser = StringExtractor("User", fileLocation);
             RedditPassword = StringExtractor("Password", fileLocation);
@@ -31,11 +31,11 @@ namespace RedditBot
                 return true;
             }
         }
-        public bool Refresh()
+        public static bool Refresh()
         {
             return Refresh(CfgLocation);
         }
-        private string StringExtractor(string id, string fileLocation)
+        private static string StringExtractor(string id, string fileLocation)
         {
             if (CfgLines == null || CfgLines.Length == 0)
             {
@@ -45,7 +45,7 @@ namespace RedditBot
             {
                 if (line.Contains(id + ":"))
                 {
-                    return line.Substring(line.IndexOf(":")).Replace(" ", "");
+                    return line.Substring(line.IndexOf(":") + 1).Replace(" ", "");
                 }
             }
             return "";
