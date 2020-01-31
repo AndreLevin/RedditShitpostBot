@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace RedditBot
 {
-    static class AuthInformation
+    static class BotInformation
     {
         public static string RedditUser { get; private set;}
         public static string RedditPassword { get; private set; }
         public static string RedditAppId { get; private set; }
         public static string RedditAppSecret { get; private set; }
+        static string RedditSub;
         static string[] CfgLines;
         static string CfgLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\RedditBot.cfg";
         public static bool Refresh(string fileLocation)
@@ -22,7 +23,7 @@ namespace RedditBot
             RedditAppId = StringExtractor("AppId", fileLocation);
             RedditAppSecret = StringExtractor("Secret", fileLocation);
 
-            if (RedditAppId == "" || RedditPassword == "" || RedditAppId == "" || RedditAppSecret == "")
+            if (RedditUser == "" || RedditPassword == "" || RedditAppId == "" || RedditAppSecret == "")
             {
                 return false;
             }
@@ -30,6 +31,11 @@ namespace RedditBot
             {
                 return true;
             }
+        }
+        public static string GetSub()
+        {
+            RedditSub = StringExtractor("Sub", CfgLocation);
+            return RedditSub;
         }
         public static bool Refresh()
         {

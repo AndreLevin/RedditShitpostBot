@@ -10,8 +10,9 @@ namespace RedditBot
     {
         static void Main(string[] args)
         {
-            AuthInformation.Refresh();
-            string test = AuthInformation.RedditAppId;
+            RedditAccess Test = new RedditAccess();
+            Test.RedditLogIn();
+            Test.test();
             Console.ReadLine();
         }
     }
