@@ -46,10 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authenticator.cs" />
+    <Compile Include="HttpHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RedditClient.cs" />
+    <Compile Include="Token.cs" />
+    <Compile Include="TokenAccessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

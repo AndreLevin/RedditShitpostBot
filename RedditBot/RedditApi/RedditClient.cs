@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace RedditApi
@@ -11,13 +12,16 @@ namespace RedditApi
     */
     public class RedditClient
     {
-        public RedditClient()
+        HttpClient httpClient;
+        Token accessToken;
+
+        public RedditClient(string appId, string appSecret)
         {
-            string at = Authenticator.GetAccessTokenAsync().Result;
+            httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", HttpHelper.StringToBase64String($"{appId}:{appSecret}"));
         }
 
-
-        public void SubmitComment(string comment)
+        public void SubmitComment(Token token, string comment)
         {
 
         }
