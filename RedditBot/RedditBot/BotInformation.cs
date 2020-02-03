@@ -13,6 +13,8 @@ namespace RedditBot
         public static string RedditPassword { get; private set; }
         public static string RedditAppId { get; private set; }
         public static string RedditAppSecret { get; private set; }
+        public static string RedirectUri { get; private set; }
+        public static string AuthCode { get; private set; }
         static string RedditSub;
         static string[] CfgLines;
         static string CfgLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\RedditBot.cfg";
@@ -22,8 +24,10 @@ namespace RedditBot
             RedditPassword = StringExtractor("Password", fileLocation);
             RedditAppId = StringExtractor("AppId", fileLocation);
             RedditAppSecret = StringExtractor("Secret", fileLocation);
+            AuthCode = StringExtractor("Code", fileLocation);
+            RedirectUri = StringExtractor("Uri", fileLocation);
 
-            if (RedditUser == "" || RedditPassword == "" || RedditAppId == "" || RedditAppSecret == "")
+            if (RedditUser == "" || RedditPassword == "" || RedditAppId == "" || RedditAppSecret == "" || RedirectUri == "" || AuthCode == "")
             {
                 return false;
             }
