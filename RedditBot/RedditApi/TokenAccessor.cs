@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace RedditApi
 {
@@ -13,26 +12,31 @@ namespace RedditApi
     {
         private static string RequestUri = @"https://www.reddit.com/api/v1/access_token";
         private HttpClient httpClient;
+        private string Username;
+        private string Password;
 
-        public TokenAccessor(HttpClient client)
+        internal TokenAccessor(HttpClient client, string username, string password)
         {
             httpClient = client;
+            Username = username;
+            Password = password;
         }
 
-        public async Task<Token> GetAccessTokenAsync(string code, string redirectUri)
+        public async Task<AccessToken> GetNewAccessTokenAsync()
         {
             var form = new Dictionary<string, string>
                 {
-                    {"grant_type", "authorization_code"},
-                    {"code", code},
-                    {"redirect_uri", redirectUri},
+                    {"grant_type", "password"},
+                    {"username", Username},
+                    {"password", Password},
                 };
 
             HttpResponseMessage tokenResponse = await httpClient.PostAsync(RequestUri, new FormUrlEncodedContent(form));
-            var jsonContent = await tokenResponse.Content.ReadAsStringAsync();
-            Token tok = JsonConvert.DeserializeObject<Token>(jsonContent);
+            string jsonContent = await tokenResponse.Content.ReadAsStringAsync();
+            AccessToken tok = JsonConvert.DeserializeObject<AccessToken>(jsonContent);
             return tok;
         }
+
 
         
     }

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedditBot", "RedditBot\RedditBot.csproj", "{DDCD5C85-7628-42BC-B9DF-575B6E31509E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D9D936A9-6E95-4CB7-A401-B77B210D99D9} = {D9D936A9-6E95-4CB7-A401-B77B210D99D9}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedditApi", "RedditApi\RedditApi.csproj", "{D9D936A9-6E95-4CB7-A401-B77B210D99D9}"
 EndProject

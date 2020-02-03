@@ -7,18 +7,22 @@ using System.Threading.Tasks;
 
 namespace RedditBot
 {
-    static class BotInformation
+    public class BotInformation
     {
-        public static string RedditUser { get; private set;}
-        public static string RedditPassword { get; private set; }
-        public static string RedditAppId { get; private set; }
-        public static string RedditAppSecret { get; private set; }
-        public static string RedirectUri { get; private set; }
-        public static string AuthCode { get; private set; }
-        static string RedditSub;
-        static string[] CfgLines;
-        static string CfgLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\RedditBot.cfg";
-        public static bool Refresh(string fileLocation)
+        public string RedditUser { get; private set; }
+        public string RedditPassword { get; private set; }
+        public string RedditAppId { get; private set; }
+        public string RedditAppSecret { get; private set; }
+        public string RedirectUri { get; private set; }
+        public string AuthCode { get; private set; }
+        string RedditSub;
+        string[] CfgLines;
+        string CfgLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\RedditBot.cfg";
+        public BotInformation()
+        {
+            Refresh();
+        }
+        public bool Refresh(string fileLocation)
         {
             RedditUser = StringExtractor("User", fileLocation);
             RedditPassword = StringExtractor("Password", fileLocation);
@@ -36,16 +40,16 @@ namespace RedditBot
                 return true;
             }
         }
-        public static string GetSub()
+        public string GetSub()
         {
             RedditSub = StringExtractor("Sub", CfgLocation);
             return RedditSub;
         }
-        public static bool Refresh()
+        public bool Refresh()
         {
             return Refresh(CfgLocation);
         }
-        private static string StringExtractor(string id, string fileLocation)
+        private string StringExtractor(string id, string fileLocation)
         {
             if (CfgLines == null || CfgLines.Length == 0)
             {

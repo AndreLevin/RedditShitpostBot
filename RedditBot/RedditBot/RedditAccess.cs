@@ -29,9 +29,9 @@ namespace RedditBot
         }
         void Authenticate()
         {
-            var WebAgent = new BotWebAgent(BotInformation.RedditUser, BotInformation.RedditPassword, BotInformation.RedditAppId, BotInformation.RedditAppSecret, "http://uwu24.de");
+            var WebAgent = new BotWebAgent("", "", "", "", "http://uwu24.de");
             bool authenticated = false;
-            BotInformation.Refresh();
+            //BotInformation.Refresh();
             reddit = new Reddit(WebAgent, false);
             //reddit = new Reddit(BotInformation.RedditUser, BotInformation.RedditPassword, true);
             reddit.InitOrUpdateUser();
@@ -39,7 +39,7 @@ namespace RedditBot
             sub = null;
             if (!authenticated)
             {
-                BotInformation.GetSub();
+               // BotInformation.GetSub();
                 sub = reddit.GetSubreddit("");
             }
         }

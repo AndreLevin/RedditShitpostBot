@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RedditApi;
 
 namespace RedditBot
 {
     class Program
     {
-        static void Main(string[] args)
+        static  void Main(string[] args)
         {
-            RedditAccess Test = new RedditAccess();
-            Test.RedditLogIn();
-            Test.test();
-            Console.ReadLine();
+            BotInformation info = new BotInformation();
+            var client = new RedditClient(info.RedditAppId, info.RedditAppSecret, info.RedditUser, info.RedditPassword);
+             client.SubmitComment("nice cock").Wait();
+
+            
         }
     }
 }
