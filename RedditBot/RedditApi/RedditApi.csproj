@@ -54,11 +54,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RedditClient.cs" />
     <Compile Include="AccessToken.cs" />
-    <Compile Include="TokenAccessor.cs" />
+    <Compile Include="AccessTokenProvider.cs" />
+    <Compile Include="Reddit\Comment.cs" />
+    <Compile Include="Reddit\Post.cs" />
+    <Compile Include="Reddit\Subreddit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
