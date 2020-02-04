@@ -12,6 +12,7 @@ namespace RedditApi
     {
         private HttpClient httpClient;
         private AccessTokenProvider tokenProvider;
+        private static string oauthUri = @"https://oauth.reddit.com";
 
         public RedditClient(string appId, string appSecret, string username, string password)
         {
@@ -30,6 +31,7 @@ namespace RedditApi
             await tokenProvider.RevokeToken();
         }
 
+
         public async Task<Subreddit> GetSubredditByName(string name)
         {
             await tokenProvider.Refresh();
@@ -41,7 +43,7 @@ namespace RedditApi
                 { "query",name }
             };
 
-            HttpResponseMessage tokenResponse = httpClient.PostAsync(@"https://oauth.reddit.com/api/search_subreddits", new FormUrlEncodedContent(form)).Result;
+            HttpResponseMessage tokenResponse = httpClient.PostAsync($@"{oauthUri}/api/search_subreddits", new FormUrlEncodedContent(form)).Result;
             string jsonContent = tokenResponse.Content.ReadAsStringAsync().Result;
             return Newtonsoft.Json.JsonConvert.DeserializeObject<Subreddit>(jsonContent);
         }

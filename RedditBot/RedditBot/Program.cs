@@ -13,7 +13,7 @@ namespace RedditBot
         {
             BotInformation info = new BotInformation();
             var client = new RedditClient(info.RedditAppId, info.RedditAppSecret, info.RedditUser, info.RedditPassword);
-            
+
             client.SubmitComment("nice cock").Wait();
 
             //client.Close().Wait();

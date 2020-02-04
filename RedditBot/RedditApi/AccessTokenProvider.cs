@@ -30,7 +30,7 @@ namespace RedditApi
         public async Task Refresh()
         {
             AccessToken at = await GetValidAccessToken();
-            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", HttpHelper.StringToBase64String($"{at.Token}"));
+            httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{at.Token}");
             httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", @"windows:CockPosts:v1.0.0 (by /user/CockPostBot)");
         }
 
