@@ -5,6 +5,7 @@ using System.Text;
 using System.Net.Http;
 using System.Threading.Tasks;
 using RedditApi.Reddit;
+using Newtonsoft.Json;
 
 namespace RedditApi
 {
@@ -21,20 +22,22 @@ namespace RedditApi
             tokenProvider = new AccessTokenProvider(httpClient, username, password);
         }
 
-        public async Task SubmitComment(string comment)
-        {
-            Subreddit sub = await GetSubredditByName("RedditBotTest621");
-        }
-
         public async Task Close()
         {
             await tokenProvider.RevokeToken();
         }
 
-
-        public async Task<Subreddit> GetSubredditByName(string name)
+        public async Task<User> GetMe()
         {
-            await tokenProvider.Refresh();
+            await tokenProvider.RefreshClient();
+            var response = await httpClient.GetAsync($@"{oauthUri}/api/v1/me");
+            User u = await HttpHelper.HttpResponseToObject<User>(response);
+            return u;
+        }
+
+        public async Task<SubredditSearchResult> GetSubredditSearchResult(string name)
+        {
+            await tokenProvider.RefreshClient();
             var form = new Dictionary<string, string>
             {
                 {"exact", "true" },
@@ -43,9 +46,32 @@ namespace RedditApi
                 { "query",name }
             };
 
-            HttpResponseMessage tokenResponse = httpClient.PostAsync($@"{oauthUri}/api/search_subreddits", new FormUrlEncodedContent(form)).Result;
-            string jsonContent = tokenResponse.Content.ReadAsStringAsync().Result;
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<Subreddit>(jsonContent);
+            HttpResponseMessage response = await httpClient.PostAsync($@"{oauthUri}/api/search_subreddits", new FormUrlEncodedContent(form));
+            var res = await HttpHelper.HttpResponseToObject<SubredditSearchResult>(response);
+            return res;
+        }
+
+        public async Task GetSubbredditNew(string subname)
+        {
+            await tokenProvider.RefreshClient();
+            string url = $@"https://www.reddit.com/r/{subname}/new.json";
+            var response = await httpClient.GetAsync(url);
+            string jsonContent = await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task SubmitText(string subname)
+        {
+            await tokenProvider.RefreshClient();
+            var form = new Dictionary<string, string>
+            {
+                {"sr", subname },
+                {"title", "subtest" },
+                {"text","hallotest1234" },
+               
+            };
+            HttpResponseMessage response = await httpClient.PostAsync($@"{oauthUri}/api/submit", new FormUrlEncodedContent(form));
+            string i = await response.Content.ReadAsStringAsync();
+            //var res = await HttpHelper.HttpResponseToObject<SubredditSearchResult>(response);
         }
     }
 }

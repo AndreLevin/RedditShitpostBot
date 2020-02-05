@@ -58,6 +58,8 @@
     <Compile Include="Reddit\Comment.cs" />
     <Compile Include="Reddit\Post.cs" />
     <Compile Include="Reddit\Subreddit.cs" />
+    <Compile Include="Reddit\SubredditSearchResult.cs" />
+    <Compile Include="Reddit\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -27,9 +27,10 @@ namespace RedditApi
             Password = password;
         }
 
-        public async Task Refresh()
+        public async Task RefreshClient()
         {
             AccessToken at = await GetValidAccessToken();
+            httpClient.DefaultRequestHeaders.Clear();
             httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", $"{at.Token}");
             httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", @"windows:CockPosts:v1.0.0 (by /user/CockPostBot)");
         }
@@ -64,11 +65,11 @@ namespace RedditApi
                     {"grant_type", "password"},
                     {"username", Username},
                     {"password", Password},
+                    {"scope" , "*"}
                 };
 
             HttpResponseMessage tokenResponse = await httpClient.PostAsync(RequestUri, new FormUrlEncodedContent(form));
-            string jsonContent = await tokenResponse.Content.ReadAsStringAsync();
-            AccessToken tok = JsonConvert.DeserializeObject<AccessToken>(jsonContent);
+            var tok = await HttpHelper.HttpResponseToObject<AccessToken>(tokenResponse);
             return tok;
         }
 
