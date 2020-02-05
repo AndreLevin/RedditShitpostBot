@@ -65,7 +65,7 @@ namespace RedditApi
                     {"grant_type", "password"},
                     {"username", Username},
                     {"password", Password},
-                    {"scope" , "*"}
+                    {"scope", "*"}
                 };
 
             HttpResponseMessage tokenResponse = await httpClient.PostAsync(RequestUri, new FormUrlEncodedContent(form));

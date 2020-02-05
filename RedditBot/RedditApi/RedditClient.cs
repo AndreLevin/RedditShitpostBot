@@ -35,26 +35,10 @@ namespace RedditApi
             return u;
         }
 
-        public async Task<SubredditSearchResult> GetSubredditSearchResult(string name)
-        {
-            await tokenProvider.RefreshClient();
-            var form = new Dictionary<string, string>
-            {
-                {"exact", "true" },
-                {"include_over_18", "true" },
-                {"include_unadvertisable","true" },
-                { "query",name }
-            };
-
-            HttpResponseMessage response = await httpClient.PostAsync($@"{oauthUri}/api/search_subreddits", new FormUrlEncodedContent(form));
-            var res = await HttpHelper.HttpResponseToObject<SubredditSearchResult>(response);
-            return res;
-        }
-
         public async Task GetSubbredditNew(string subname)
         {
             await tokenProvider.RefreshClient();
-            string url = $@"https://www.reddit.com/r/{subname}/new.json";
+            string url = $@"{oauthUri}/r/{subname}/new";
             var response = await httpClient.GetAsync(url);
             string jsonContent = await response.Content.ReadAsStringAsync();
         }

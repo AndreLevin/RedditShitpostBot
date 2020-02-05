@@ -55,10 +55,7 @@
     <Compile Include="RedditClient.cs" />
     <Compile Include="AccessToken.cs" />
     <Compile Include="AccessTokenProvider.cs" />
-    <Compile Include="Reddit\Comment.cs" />
-    <Compile Include="Reddit\Post.cs" />
     <Compile Include="Reddit\Subreddit.cs" />
-    <Compile Include="Reddit\SubredditSearchResult.cs" />
     <Compile Include="Reddit\User.cs" />
   </ItemGroup>
   <ItemGroup>

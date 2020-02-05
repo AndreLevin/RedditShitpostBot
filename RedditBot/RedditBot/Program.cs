@@ -12,12 +12,12 @@ namespace RedditBot
         static  void Main(string[] args)
         {
             string subname = "RedditBotTest621";
+            string sn2 = "redditdev";
             BotInformation info = new BotInformation();
             var client = new RedditClient(info.RedditAppId, info.RedditAppSecret, info.RedditUser, info.RedditPassword);
 
-            //client.GetSubredditSearchResult(subname).Wait();
             //client.GetMe().Wait();
-            client.GetSubbredditNew(subname).Wait();
+            client.GetSubbredditNew("RedditBotTest621").Wait();
             //client.SubmitText(subname).Wait();
         }
     }
