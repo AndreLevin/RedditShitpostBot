@@ -22,6 +22,7 @@ namespace RedditApi
             tokenProvider = new AccessTokenProvider(httpClient, username, password);
         }
 
+        //dont use yet!
         public async Task Close()
         {
             await tokenProvider.RevokeToken();
@@ -35,27 +36,23 @@ namespace RedditApi
             return u;
         }
 
-        public async Task GetSubbredditNew(string subname)
+        public async Task<Listing> GetSubbredditNew(string subname)
         {
             await tokenProvider.RefreshClient();
-            string url = $@"{oauthUri}/r/{subname}/new";
-            var response = await httpClient.GetAsync(url);
-            string jsonContent = await response.Content.ReadAsStringAsync();
+            var response = await httpClient.GetAsync($@"{oauthUri}/r/{subname}/new");
+            return await HttpHelper.HttpResponseToObject<Listing>(response);
         }
 
-        public async Task SubmitText(string subname)
+        public async Task<HttpResponseMessage> CommentOnThing(string fullname, string text)
         {
             await tokenProvider.RefreshClient();
             var form = new Dictionary<string, string>
             {
-                {"sr", subname },
-                {"title", "subtest" },
-                {"text","hallotest1234" },
-               
+                {"text", text },
+                {"thing_id", fullname }
             };
-            HttpResponseMessage response = await httpClient.PostAsync($@"{oauthUri}/api/submit", new FormUrlEncodedContent(form));
-            string i = await response.Content.ReadAsStringAsync();
-            //var res = await HttpHelper.HttpResponseToObject<SubredditSearchResult>(response);
+
+            return await httpClient.PostAsync($@"{oauthUri}/api/comment", new FormUrlEncodedContent(form));
         }
     }
 }

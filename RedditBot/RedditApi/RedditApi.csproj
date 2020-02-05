@@ -55,8 +55,11 @@
     <Compile Include="RedditClient.cs" />
     <Compile Include="AccessToken.cs" />
     <Compile Include="AccessTokenProvider.cs" />
+    <Compile Include="Reddit\Listing.cs" />
     <Compile Include="Reddit\Subreddit.cs" />
+    <Compile Include="Reddit\Thing.cs" />
     <Compile Include="Reddit\User.cs" />
+    <Compile Include="SubredditWatcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
