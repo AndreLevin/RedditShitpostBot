@@ -14,6 +14,11 @@ namespace RedditApi.Reddit
 
         [JsonProperty("data")]
         public ListingData Data { get; set; }
+
+        public IEnumerable<Thing> GetChildrenOfKind(Thing.ThingKind kind)
+        {
+            return Data.Children.Where(child => child.Kind == kind);
+        }
     }
 
     public partial class ListingData
@@ -22,7 +27,7 @@ namespace RedditApi.Reddit
         public object Modhash { get; set; }
 
         [JsonProperty("dist")]
-        public long Dist { get; set; }
+        public int Dist { get; set; }
 
         [JsonProperty("children")]
         public Thing[] Children { get; set; }

@@ -12,23 +12,22 @@ namespace RedditBot
     {
         private static RedditClient client;
         private static string commenttext = "nice cock bro";
+        private const string subname = "RedditBotTest621";
+
         static void Main(string[] args)
         {
-            string subname = "RedditBotTest621";
-            string sn2 = "redditdev";
-            
             BotInformation info = new BotInformation();
             client = new RedditClient(info.RedditAppId, info.RedditAppSecret, info.RedditUser, info.RedditPassword);
-            SubredditWatcher watcher = new SubredditWatcher("RedditBotTest621", client);
-            watcher.NewPost += NewPost;
+            SubredditWatcher watcher = new SubredditWatcher(subname, client);
+            watcher.UncommentedPostSubmittet += UncommentedPostSubmittet;
             watcher.Start();
             
             Console.Read();
         }
 
-        private static void NewPost(Thing post)
+        private static async void UncommentedPostSubmittet(Thing post)
         {
-            client.CommentOnThing(post.Fullname, commenttext);
+            await client.CommentOnThing(post.Fullname, commenttext).ConfigureAwait(false);
         }
     }
 }

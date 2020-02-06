@@ -12,7 +12,7 @@ namespace RedditApi
     public class SubredditWatcher
     {
         public delegate void NewPostDelegate(Thing post);
-        public event NewPostDelegate NewPost;
+        public event NewPostDelegate UncommentedPostSubmittet;
 
         private bool isActive;
         private RedditClient Client;
@@ -26,8 +26,8 @@ namespace RedditApi
             get => _CheckInterval;
             set
             {
-                _CheckInterval = Math.Min(5, _CheckInterval);
-                checkTimeSpan = new TimeSpan(0, 0, _CheckInterval);
+                _CheckInterval = Math.Min(5, value);
+                checkTimeSpan = new TimeSpan(0, 0, value);
             }
         }
         
@@ -35,7 +35,7 @@ namespace RedditApi
 
         public SubredditWatcher(string subredditName, RedditClient watcherClient)
         {
-            _CheckInterval = 30;
+            CheckInterval = 30;
             Client = watcherClient;
             isActive = false;
             subname = subredditName;
@@ -46,8 +46,11 @@ namespace RedditApi
             while (isActive)
             {
                 var newPosts = await Client.GetSubbredditNew(subname);
-                if (IsPostNew(newPosts.Data.Children[0]))
-                    NewPost.Invoke(newPosts.Data.Children[1]);
+                foreach (Thing post in newPosts.Data.Children)
+                {
+                    if (await IsPostUncommented(post))
+                        UncommentedPostSubmittet.Invoke(post);
+                }
                 Thread.Sleep(checkTimeSpan);
             }
         }
@@ -63,9 +66,13 @@ namespace RedditApi
             isActive = false;
         }
 
-        private bool IsPostNew(Thing Post)
+        private async Task<bool> IsPostUncommented(Thing Post)
         {
-            return true;
+            var thingsListings = await Client.GetEndpoint<Listing[]>(Post.Data.Permalink + "?limit=20");
+            var comments = thingsListings.SelectMany(listing=>listing.GetChildrenOfKind(Thing.ThingKind.Comment)).ToArray();
+            var me = await Client.GetMe();
+            string myname = me.Name;
+            return !comments.Any(comment => comment.Data.Author == myname);
         }
     }
 }

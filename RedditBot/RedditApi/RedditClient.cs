@@ -13,7 +13,7 @@ namespace RedditApi
     {
         private HttpClient httpClient;
         private AccessTokenProvider tokenProvider;
-        private static string oauthUri = @"https://oauth.reddit.com";
+        public const string oauthUri = @"https://oauth.reddit.com";
 
         public RedditClient(string appId, string appSecret, string username, string password)
         {
@@ -32,8 +32,7 @@ namespace RedditApi
         {
             await tokenProvider.RefreshClient();
             var response = await httpClient.GetAsync($@"{oauthUri}/api/v1/me");
-            User u = await HttpHelper.HttpResponseToObject<User>(response);
-            return u;
+            return await HttpHelper.HttpResponseToObject<User>(response);
         }
 
         public async Task<Listing> GetSubbredditNew(string subname)
@@ -53,6 +52,13 @@ namespace RedditApi
             };
 
             return await httpClient.PostAsync($@"{oauthUri}/api/comment", new FormUrlEncodedContent(form));
+        }
+
+        public async Task<T> GetEndpoint<T>(string url)
+        {
+            string fullurl = oauthUri + url;
+            var response = await httpClient.GetAsync(fullurl);
+            return await HttpHelper.HttpResponseToObject<T>(response);
         }
     }
 }
