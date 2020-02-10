@@ -30,21 +30,59 @@ namespace CommentBuilder
             {
                 case "NICE":
                 case "ADJECTIVES":
-                    adjectives = File.ReadAllLines(folder + "adjectives.pp").ToList();
+                    adjectives = GetList(folder + "adjectives.pp");
                     break;
                 case "PP":
-                    pp = File.ReadAllLines(folder + "pp.pp").ToList();
+                    pp = GetList(folder + "pp.pp");
                     break;
                 case "BRO":
-                    bro = File.ReadAllLines(folder + "bro.pp").ToList();
+                    bro = GetList(folder + "bro.pp");
                     break;
                 case "END":
-                    end = File.ReadAllLines(folder + "end.pp").ToList();
+                    end = GetList(folder + "end.pp");
                     break;
                 default:
                     Console.WriteLine("Unknown List?????");
                     break;
             }
+        }
+        List <string> GetList(string file)
+        {
+            List<string> ret = new List<string>();
+            string[] linesFromFile = File.ReadAllLines(file);
+            foreach (string line in linesFromFile)
+            {
+                if (line.Contains(":"))
+                {
+                    if ((line.Length > (line.IndexOf(":") + 1)) && ContainsNumber(line.Substring(line.IndexOf(":") + 1)))
+                    {
+                        int multiplier = 1;
+
+                        try 
+                        {
+                            multiplier = Convert.ToInt32(line.Substring(line.IndexOf(":") + 1).Trim());
+                        }
+                        catch
+                        {
+                            multiplier = 1;
+                        }
+
+                        for (int i = 0; i<multiplier; i++)
+                        {
+                            ret.Add(line.Substring(0, line.IndexOf(":")));
+                        }
+                    }
+                    else
+                    {
+                        ret.Add(line.Substring(0, line.IndexOf(":")));
+                    }
+                }
+                else
+                {
+                    ret.Add(line);
+                }
+            }
+            return ret;
         }
         public string GetComment()
         {
@@ -58,6 +96,17 @@ namespace CommentBuilder
             }
             ret += rand.Next(10) < 3 ? (Environment.NewLine + "not gonna lie") : end[rand.Next(end.Count)];
             return ret;
+        }
+        bool ContainsNumber(string str)
+        {
+            if (str.Contains("2") || str.Contains("3") || str.Contains("4") || str.Contains("5") || str.Contains("6") || str.Contains("7") || str.Contains("8") || str.Contains("9") || str.Contains("10") || str.Contains("11"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

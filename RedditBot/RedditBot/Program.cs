@@ -11,7 +11,6 @@ namespace RedditBot
     class Program
     {
         private static RedditClient client;
-        private static string commenttext = "nice cock bro";
         private static CommentBuilder.CommentBuilder cb = new CommentBuilder.CommentBuilder();
         static void Main(string[] args)
         {
