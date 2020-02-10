@@ -13,11 +13,6 @@ namespace RedditApi
     {
         public delegate void NewPostDelegate(Thing post);
         public event NewPostDelegate NewUncommentedPostSubmittet;
-
-        private bool isActive;
-        private RedditClient Client;
-        private string subname;
-        private int _CheckInterval;
         /// <summary>
         /// interval of the watcher checking for new posts in seconds. everything under 5 will be set to 5.
         /// </summary>
@@ -30,7 +25,11 @@ namespace RedditApi
                 checkTimeSpan = new TimeSpan(0, 0, _CheckInterval);
             }
         }
-        
+
+        private bool isActive;
+        private RedditClient Client;
+        private string subname;
+        private int _CheckInterval;
         private TimeSpan checkTimeSpan;
 
         public SubredditWatcher(string subredditName, RedditClient watcherClient)
@@ -45,7 +44,7 @@ namespace RedditApi
         {
             while (isActive)
             {
-                var newPosts = await Client.GetSubbredditNew(subname, 4);
+                var newPosts = await Client.GetNew(subname, 4);
                 foreach(Thing post in newPosts.Data.Children)
                 {
                     if (await IsPostUncommented(post))

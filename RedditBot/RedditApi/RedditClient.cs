@@ -24,24 +24,22 @@ namespace RedditApi
             Me = GetMe().Result;
         }
 
-        //dont use yet!
         public async Task Close()
         {
-            await tokenProvider.RevokeToken();
+            //await tokenProvider.RevokeToken();
         }
 
         private async Task<User> GetMe()
         {
             await tokenProvider.RefreshClient();
             var response = await httpClient.GetAsync($@"{oauthUri}/api/v1/me");
-            User u = await HttpHelper.HttpResponseToObject<User>(response);
-            return u;
+            return await HttpHelper.HttpResponseToObject<User>(response);
         }
 
-        public async Task<Listing> GetSubbredditNew(string subname, int count)
+        public async Task<Listing> GetNew(string subredditName, int count)
         {
             await tokenProvider.RefreshClient();
-            var response = await httpClient.GetAsync($@"{oauthUri}/r/{subname}/new?limit={count}");
+            var response = await httpClient.GetAsync($@"{oauthUri}/r/{subredditName}/new?limit={count}");
             return await HttpHelper.HttpResponseToObject<Listing>(response);
         }
 
