@@ -43,22 +43,5 @@ namespace RedditBot
                 sub = reddit.GetSubreddit("");
             }
         }
-        public void test()
-        {
-            var posts = sub.Posts.Take(100);
-            List<Object> model = new List<Object>();
-            foreach (var post in posts)
-            {
-                if (post.Upvotes>0)
-                {
-                    int i = 0;
-                }
-            }
-
-        }
-    }
-    class TestModel
-    {
-        public int i = 0;
     }
 }
