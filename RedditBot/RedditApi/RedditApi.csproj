@@ -59,6 +59,7 @@
     <Compile Include="Reddit\AccessToken.cs" />
     <Compile Include="AccessTokenProvider.cs" />
     <Compile Include="Reddit\Listing.cs" />
+    <Compile Include="Reddit\PostResponse.cs" />
     <Compile Include="Reddit\Subreddit.cs" />
     <Compile Include="Reddit\Thing.cs" />
     <Compile Include="Reddit\User.cs" />

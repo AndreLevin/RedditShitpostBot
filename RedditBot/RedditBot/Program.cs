@@ -30,7 +30,16 @@ namespace RedditBot
         {
             if (post.Kind == Thing.ThingKind.Link)
             {
-                await client.CommentOnThing(post.Data.Name, cb.GetComment());
+                var response = await client.CommentOnThing(post.Data.Name, cb.GetComment());
+                var PostResponse = await HttpHelper.HttpResponseToObject<PostResponse>(response);
+                if (PostResponse.Success)
+                {
+                    Console.WriteLine("Successfully posted comment on " + DateTime.Now.ToString());
+                }
+                else 
+                {
+                    Console.WriteLine("Post comment failed (" + DateTime.Now.ToString() + ")");
+                }
             }
             
         }
