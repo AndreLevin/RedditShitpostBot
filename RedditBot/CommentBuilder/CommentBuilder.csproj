@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D9D936A9-6E95-4CB7-A401-B77B210D99D9}</ProjectGuid>
+    <ProjectGuid>{8300D9B5-A446-414D-AA85-7A724DE5BB18}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>RedditApi</RootNamespace>
-    <AssemblyName>RedditApi</AssemblyName>
+    <RootNamespace>CommentBuilder</RootNamespace>
+    <AssemblyName>CommentBuilder</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -36,13 +36,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="RedditSharp, Version=1.1.14.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RedditSharp.1.1.14\lib\net461\RedditSharp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,22 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HttpHelper.cs" />
+    <Compile Include="CommentBuilder.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RedditClient.cs" />
-    <Compile Include="Reddit\AccessToken.cs" />
-    <Compile Include="AccessTokenProvider.cs" />
-    <Compile Include="Reddit\Listing.cs" />
-    <Compile Include="Reddit\PostResponse.cs" />
-    <Compile Include="Reddit\Subreddit.cs" />
-    <Compile Include="Reddit\Thing.cs" />
-    <Compile Include="Reddit\User.cs" />
-    <Compile Include="SubredditWatcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -10,8 +10,57 @@ namespace RedditApi.Reddit
 {
     public partial class Thing
     {
+        public enum ThingKind
+        {
+            Comment,
+            Account,
+            Link,
+            Message,
+            Subreddit,
+            Award,
+            Undefined
+        }
+        public ThingKind Kind { get; private set; }
+
+        private string _KindString;
         [JsonProperty("kind")]
-        public string Kind { get; set; }
+        private string KindString
+        {
+            get
+            {
+                return _KindString;
+            }
+            set
+            {
+                _KindString = value;
+                switch (value)
+                {
+                    case "t1":
+
+                        Kind = ThingKind.Comment;
+                        break;
+                    case "t2":
+                        Kind = ThingKind.Account;
+                        break;
+                    case "t3":
+                        Kind = ThingKind.Link;
+                        break;
+                    case "t4":
+                        Kind = ThingKind.Message;
+                        break;
+                    case "t5":
+                        Kind = ThingKind.Subreddit;
+                        break;
+                    case "t6":
+                        Kind = ThingKind.Award;
+                        break;
+                    default:
+                        Kind = ThingKind.Undefined;
+                        break;
+
+                }
+            }
+        }
 
         [JsonProperty("data")]
         public ThingData Data { get; set; }

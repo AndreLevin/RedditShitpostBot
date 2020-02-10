@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using RedditApi;
 using RedditApi.Reddit;
-
+using CommentBuilder;
 namespace RedditBot
 {
     class Program
     {
         private static RedditClient client;
-        private static string commenttext = "nice cock bro";
+        private static CommentBuilder.CommentBuilder cb = new CommentBuilder.CommentBuilder();
         static void Main(string[] args)
         {
             string subname = "RedditBotTest621";
@@ -28,7 +28,20 @@ namespace RedditBot
 
         private static async void NewPost(Thing post)
         {
-            await client.CommentOnThing(post.Data.Name, commenttext);
+            if (post.Kind == Thing.ThingKind.Link)
+            {
+                var response = await client.CommentOnThing(post.Data.Name, cb.GetComment());
+                var PostResponse = await HttpHelper.HttpResponseToObject<PostResponse>(response);
+                if (PostResponse.Success)
+                {
+                    Console.WriteLine("Successfully posted comment on " + DateTime.Now.ToString());
+                }
+                else 
+                {
+                    Console.WriteLine("Post comment failed (" + DateTime.Now.ToString() + ")");
+                }
+            }
+            
         }
     }
 }
