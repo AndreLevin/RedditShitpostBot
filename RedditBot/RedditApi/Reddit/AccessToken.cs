@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
 
-namespace RedditApi
+namespace RedditApi.Reddit
 {
     [JsonObject]
     public class AccessToken
