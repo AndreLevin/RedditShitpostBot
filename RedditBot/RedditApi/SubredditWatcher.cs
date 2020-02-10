@@ -26,8 +26,8 @@ namespace RedditApi
             get => _CheckInterval;
             set
             {
-                _CheckInterval = Math.Min(5, _CheckInterval);
-                checkTimeSpan = new TimeSpan(0, 0, _CheckInterval);
+                _CheckInterval = Math.Min(5, value);
+                checkTimeSpan = new TimeSpan(0, 0, value);
             }
         }
         
@@ -35,7 +35,7 @@ namespace RedditApi
 
         public SubredditWatcher(string subredditName, RedditClient watcherClient)
         {
-            _CheckInterval = 30;
+            CheckInterval = 15;
             Client = watcherClient;
             isActive = false;
             subname = subredditName;

@@ -10,6 +10,13 @@ namespace CommentBuilder
     {
         static void Main(string[] args)
         {
+            CommentBuilder comm = new CommentBuilder();
+            while (true)
+            {
+                Console.WriteLine(comm.GetComment());
+                Console.ReadLine();
+            }
+
         }
     }
 }

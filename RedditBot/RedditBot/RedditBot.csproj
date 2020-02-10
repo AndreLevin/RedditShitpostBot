@@ -48,9 +48,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RedditApi">
-      <HintPath>..\RedditApi\bin\Debug\RedditApi.dll</HintPath>
-    </Reference>
     <Reference Include="RedditSharp, Version=1.1.14.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RedditSharp.1.1.14\lib\net461\RedditSharp.dll</HintPath>
     </Reference>
@@ -85,6 +82,15 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CommentBuilder\CommentBuilder.csproj">
+      <Project>{8300d9b5-a446-414d-aa85-7a724de5bb18}</Project>
+      <Name>CommentBuilder</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedditApi\RedditApi.csproj">
+      <Project>{d9d936a9-6e95-4cb7-a401-b77b210d99d9}</Project>
+      <Name>RedditApi</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
