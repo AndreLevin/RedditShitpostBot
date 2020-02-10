@@ -14,7 +14,7 @@ namespace RedditApi
         public static async Task<T> HttpResponseToObject<T>(HttpResponseMessage response)
         {
             string jsonContent = await response.Content.ReadAsStringAsync();
-            return  JsonConvert.DeserializeObject<T>(jsonContent);
+            return  JsonConvert.DeserializeObject<T>(jsonContent, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore});
         }
     }
 }

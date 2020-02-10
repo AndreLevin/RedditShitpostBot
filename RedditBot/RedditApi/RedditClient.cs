@@ -14,12 +14,14 @@ namespace RedditApi
         private HttpClient httpClient;
         private AccessTokenProvider tokenProvider;
         private static string oauthUri = @"https://oauth.reddit.com";
+        public User Me { get; private set; }
 
         public RedditClient(string appId, string appSecret, string username, string password)
         {
             httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", HttpHelper.StringToBase64String($"{appId}:{appSecret}"));
             tokenProvider = new AccessTokenProvider(httpClient, username, password);
+            Me = GetMe().Result;
         }
 
         //dont use yet!
@@ -28,7 +30,7 @@ namespace RedditApi
             await tokenProvider.RevokeToken();
         }
 
-        public async Task<User> GetMe()
+        private async Task<User> GetMe()
         {
             await tokenProvider.RefreshClient();
             var response = await httpClient.GetAsync($@"{oauthUri}/api/v1/me");
@@ -36,10 +38,10 @@ namespace RedditApi
             return u;
         }
 
-        public async Task<Listing> GetSubbredditNew(string subname)
+        public async Task<Listing> GetSubbredditNew(string subname, int count)
         {
             await tokenProvider.RefreshClient();
-            var response = await httpClient.GetAsync($@"{oauthUri}/r/{subname}/new");
+            var response = await httpClient.GetAsync($@"{oauthUri}/r/{subname}/new?limit={count}");
             return await HttpHelper.HttpResponseToObject<Listing>(response);
         }
 
@@ -53,6 +55,12 @@ namespace RedditApi
             };
 
             return await httpClient.PostAsync($@"{oauthUri}/api/comment", new FormUrlEncodedContent(form));
+        }
+
+        public async Task<Listing[]> GetListing(string endpointUrl)
+        {
+            var response = await httpClient.GetAsync($@"{oauthUri}{endpointUrl}");
+            return await HttpHelper.HttpResponseToObject<Listing[]>(response);
         }
     }
 }

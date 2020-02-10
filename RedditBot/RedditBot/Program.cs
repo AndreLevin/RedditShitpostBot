@@ -20,15 +20,15 @@ namespace RedditBot
             BotInformation info = new BotInformation();
             client = new RedditClient(info.RedditAppId, info.RedditAppSecret, info.RedditUser, info.RedditPassword);
             SubredditWatcher watcher = new SubredditWatcher("RedditBotTest621", client);
-            watcher.NewPost += NewPost;
+            watcher.NewUncommentedPostSubmittet += NewPost;
             watcher.Start();
             
             Console.Read();
         }
 
-        private static void NewPost(Thing post)
+        private static async void NewPost(Thing post)
         {
-            client.CommentOnThing(post.Fullname, commenttext);
+            await client.CommentOnThing(post.Data.Name, commenttext);
         }
     }
 }

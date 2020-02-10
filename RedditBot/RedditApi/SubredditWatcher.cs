@@ -12,7 +12,7 @@ namespace RedditApi
     public class SubredditWatcher
     {
         public delegate void NewPostDelegate(Thing post);
-        public event NewPostDelegate NewPost;
+        public event NewPostDelegate NewUncommentedPostSubmittet;
 
         private bool isActive;
         private RedditClient Client;
@@ -45,9 +45,12 @@ namespace RedditApi
         {
             while (isActive)
             {
-                var newPosts = await Client.GetSubbredditNew(subname);
-                if (IsPostNew(newPosts.Data.Children[0]))
-                    NewPost.Invoke(newPosts.Data.Children[1]);
+                var newPosts = await Client.GetSubbredditNew(subname, 4);
+                foreach(Thing post in newPosts.Data.Children)
+                {
+                    if (await IsPostUncommented(post))
+                        NewUncommentedPostSubmittet.Invoke(post);
+                }
                 Thread.Sleep(checkTimeSpan);
             }
         }
@@ -63,9 +66,11 @@ namespace RedditApi
             isActive = false;
         }
 
-        private bool IsPostNew(Thing Post)
+        private async Task<bool> IsPostUncommented(Thing Post)
         {
-            return true;
+            var commentListings = await Client.GetListing(Post.Data.Permalink);
+            var allComments = commentListings.SelectMany(commentlisting => commentlisting.Data.Children);
+            return !allComments.Any(comment => comment.Data.Author == Client.Me.Name);
         }
     }
 }

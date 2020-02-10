@@ -15,8 +15,6 @@ namespace RedditApi.Reddit
 
         [JsonProperty("data")]
         public ThingData Data { get; set; }
-
-        public string Fullname => $"{Kind}_{Data.Id}";
     }
 
     public partial class ThingData
