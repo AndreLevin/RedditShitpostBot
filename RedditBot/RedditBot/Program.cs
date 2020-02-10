@@ -11,7 +11,7 @@ namespace RedditBot
     class Program
     {
         private static RedditClient client;
-        private static string commenttext = "nice cock bro";
+        private static string commenttext = "astonishing phallus bro, not gonna lie";
         private const string subname = "RedditBotTest621";
 
         static void Main(string[] args)
