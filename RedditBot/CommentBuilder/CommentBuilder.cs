@@ -24,7 +24,7 @@ namespace CommentBuilder
             UpdateList("end");
             rand = new Random();
         }
-        void UpdateList(string identifier)
+        void UpdateList(string identifier) //für was das argument, wenn die argumente hardcoded sind?
         {
             switch (identifier.ToUpper())
             {
@@ -54,13 +54,18 @@ namespace CommentBuilder
             {
                 if (line.Contains(":"))
                 {
-                    if ((line.Length > (line.IndexOf(":") + 1)) && ContainsNumber(line.Substring(line.IndexOf(":") + 1)))
+                    if ((line.Length > (line.IndexOf(":") + 1)) && ContainsNumber(line.Substring(line.IndexOf(":") + 1))) //bedingung auslagern in methode?
                     {
                         int multiplier = 1;
 
+                        /*
+                         * statt try catch block?
+                         int multiplier = 1;
+                         int.TryParse(line.Substring(line.IndexOf(":") + 1).Trim(), out multiplier);
+                        */
                         try 
-                        {
-                            multiplier = Convert.ToInt32(line.Substring(line.IndexOf(":") + 1).Trim());
+                        {                    
+                            multiplier = Convert.ToInt32(line.Substring(line.IndexOf(":") + 1).Trim()); 
                         }
                         catch
                         {
@@ -72,7 +77,7 @@ namespace CommentBuilder
                             ret.Add(line.Substring(0, line.IndexOf(":")));
                         }
                     }
-                    else
+                    else //warum else block, wenn multiplier default = 1 ist?
                     {
                         ret.Add(line.Substring(0, line.IndexOf(":")));
                     }
@@ -99,6 +104,7 @@ namespace CommentBuilder
         }
         bool ContainsNumber(string str)
         {
+            //return int.TryParse(str.Split(':').Last(), out int parse) && parse > 2;
             if (str.Contains("2") || str.Contains("3") || str.Contains("4") || str.Contains("5") || str.Contains("6") || str.Contains("7") || str.Contains("8") || str.Contains("9") || str.Contains("10") || str.Contains("11"))
             {
                 return true;
