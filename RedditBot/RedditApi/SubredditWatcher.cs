@@ -47,7 +47,7 @@ namespace RedditApi
                 var newPosts = await Client.GetNew(subname, 4);
                 foreach(Thing post in newPosts.Data.Children)
                 {
-                    if (await IsPostUncommented(post))
+                    if (post.Data.Over18 && await IsPostUncommented(post))
                         NewUncommentedPostSubmittet.Invoke(post);
                 }
                 Thread.Sleep(checkTimeSpan);
