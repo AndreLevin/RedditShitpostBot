@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using RedditApi;
 using RedditApi.Reddit;
 using CommentBuilder;
+using Logger;
+
 namespace RedditBot
 {
     class Program
@@ -14,13 +16,7 @@ namespace RedditBot
         private static CommentBuilder.CommentBuilder cb = new CommentBuilder.CommentBuilder();
         static void Main(string[] args)
         {
-            BotInformation info = new BotInformation();
-            client = new RedditClient(info.RedditAppId, info.RedditAppSecret, info.RedditUser, info.RedditPassword);
-            SubredditWatcher watcher = new SubredditWatcher(info.SubReddit, client);
-            watcher.NewUncommentedPostSubmittet += NewPost;
-            watcher.Start();
-            
-            Console.Read();
+            StartBot();
         }
 
         private static async void NewPost(Thing post)
@@ -39,6 +35,25 @@ namespace RedditBot
                 }
             }
             
+        }
+        private static void StartBot()
+        {
+            try 
+            {
+                BotInformation info = new BotInformation();
+                client = new RedditClient(info.RedditAppId, info.RedditAppSecret, info.RedditUser, info.RedditPassword);
+                SubredditWatcher watcher = new SubredditWatcher(info.SubReddit, client);
+                watcher.NewUncommentedPostSubmittet += NewPost;
+                watcher.Start();
+                
+                Console.Read();
+            }
+            catch (Exception e)
+            {
+                System.Threading.Thread.Sleep(1000);
+                Logger.Logger.CreateLogEntry(e);
+                StartBot();
+            }
         }
     }
 }
