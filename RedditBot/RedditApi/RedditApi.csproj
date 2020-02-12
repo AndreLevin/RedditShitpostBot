@@ -40,6 +40,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RedditSharp, Version=1.1.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RedditSharp.1.1.14\lib\net461\RedditSharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -56,6 +59,7 @@
     <Compile Include="Reddit\AccessToken.cs" />
     <Compile Include="AccessTokenProvider.cs" />
     <Compile Include="Reddit\Listing.cs" />
+    <Compile Include="Reddit\PostResponse.cs" />
     <Compile Include="Reddit\Subreddit.cs" />
     <Compile Include="Reddit\Thing.cs" />
     <Compile Include="Reddit\User.cs" />
