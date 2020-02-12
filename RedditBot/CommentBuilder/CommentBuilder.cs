@@ -54,7 +54,7 @@ namespace CommentBuilder
             {
                 if (line.Contains(":"))
                 {
-                    if ((line.Length > (line.IndexOf(":") + 1)) && ContainsNumber(line.Substring(line.IndexOf(":") + 1)))
+                    if ((line.Length > (line.IndexOf(":") + 1)) && ContainsNumber(line))
                     {
                         int multiplier = 1;
 
@@ -99,14 +99,7 @@ namespace CommentBuilder
         }
         bool ContainsNumber(string str)
         {
-            if (str.Contains("2") || str.Contains("3") || str.Contains("4") || str.Contains("5") || str.Contains("6") || str.Contains("7") || str.Contains("8") || str.Contains("9") || str.Contains("10") || str.Contains("11"))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return int.TryParse(str.Split(':').Last(), out int parse) && parse > 1;
         }
     }
 }
