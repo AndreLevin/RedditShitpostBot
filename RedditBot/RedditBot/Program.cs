@@ -15,7 +15,7 @@ namespace RedditBot
         static void Main(string[] args)
         {
             string subname = "RedditBotTest621";
-            string sn2 = "redditdev";
+            string sn2 = "NiceCock";
             
             BotInformation info = new BotInformation();
             client = new RedditClient(info.RedditAppId, info.RedditAppSecret, info.RedditUser, info.RedditPassword);
