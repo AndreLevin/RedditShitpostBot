@@ -45,7 +45,7 @@ namespace RedditApi
         {
             while (isActive)
             {
-                var newPosts = await Client.GetSubbredditNew(subname, 4);
+                var newPosts = await CatchGetSubredditNew(subname, 4);
                 foreach(Thing post in newPosts.Data.Children)
                 {
                     if (post.Data.Over18 && await IsPostUncommented(post))
@@ -54,7 +54,18 @@ namespace RedditApi
                 Thread.Sleep(checkTimeSpan);
             }
         }
-
+        private async Task<Listing> CatchGetSubredditNew(string subname, int count)
+        {
+            try 
+            {
+                return await Client.GetSubredditNew(subname, count);
+            }
+            catch
+            {
+                Thread.Sleep(1000);
+                return await CatchGetSubredditNew(subname, count);
+            }
+        }
         public void Start()
         {
             isActive = true;

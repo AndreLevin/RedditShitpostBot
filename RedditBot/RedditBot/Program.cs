@@ -14,12 +14,9 @@ namespace RedditBot
         private static CommentBuilder.CommentBuilder cb = new CommentBuilder.CommentBuilder();
         static void Main(string[] args)
         {
-            string subname = "RedditBotTest621";
-            string sn2 = "NiceCock";
-            
             BotInformation info = new BotInformation();
             client = new RedditClient(info.RedditAppId, info.RedditAppSecret, info.RedditUser, info.RedditPassword);
-            SubredditWatcher watcher = new SubredditWatcher("RedditBotTest621", client);
+            SubredditWatcher watcher = new SubredditWatcher(info.SubReddit, client);
             watcher.NewUncommentedPostSubmittet += NewPost;
             watcher.Start();
             

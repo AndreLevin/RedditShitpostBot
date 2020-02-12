@@ -38,7 +38,7 @@ namespace RedditApi
             return u;
         }
 
-        public async Task<Listing> GetSubbredditNew(string subname, int count)
+        public async Task<Listing> GetSubredditNew(string subname, int count)
         {
             await tokenProvider.RefreshClient();
             var response = await httpClient.GetAsync($@"{oauthUri}/r/{subname}/new?limit={count}");
