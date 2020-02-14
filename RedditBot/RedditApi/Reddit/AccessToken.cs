@@ -41,7 +41,8 @@ namespace RedditApi.Reddit
 
         public bool IsValid()
         {
-            return DateTime.Now < ExpirationDateTime && !string.IsNullOrEmpty(Token);
+            bool ret=  DateTime.Now < ExpirationDateTime.AddMinutes(-10) && !string.IsNullOrEmpty(Token);
+            return ret;
         }
 
         public void Save(string filename)

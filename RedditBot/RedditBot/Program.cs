@@ -50,7 +50,7 @@ namespace RedditBot
             }
             catch (Exception e)
             {
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(2000);
                 Logger.Logger.CreateLogEntry(e);
                 StartBot();
             }
