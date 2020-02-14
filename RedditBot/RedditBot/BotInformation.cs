@@ -14,8 +14,8 @@ namespace RedditBot
         public string RedditAppId { get; private set; }
         public string RedditAppSecret { get; private set; }
         public string RedirectUri { get; private set; }
+        public string SubReddit { get; private set; }
         public string AuthCode { get; private set; }
-        string RedditSub;
         string[] CfgLines;
         string CfgLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\RedditBot.cfg";
         public BotInformation()
@@ -30,8 +30,9 @@ namespace RedditBot
             RedditAppSecret = StringExtractor("Secret", fileLocation);
             AuthCode = StringExtractor("Code", fileLocation);
             RedirectUri = StringExtractor("Uri", fileLocation);
+            SubReddit = StringExtractor("SubReddit", fileLocation);
 
-            if (RedditUser == "" || RedditPassword == "" || RedditAppId == "" || RedditAppSecret == "" || RedirectUri == "" || AuthCode == "")
+            if (RedditUser == "" || RedditPassword == "" || RedditAppId == "" || RedditAppSecret == "" || RedirectUri == "" || AuthCode == "" || SubReddit == "")
             {
                 return false;
             }
@@ -39,11 +40,6 @@ namespace RedditBot
             {
                 return true;
             }
-        }
-        public string GetSub()
-        {
-            RedditSub = StringExtractor("Sub", CfgLocation);
-            return RedditSub;
         }
         public bool Refresh()
         {
