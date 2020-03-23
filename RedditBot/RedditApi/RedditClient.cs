@@ -25,12 +25,12 @@ namespace RedditApi
         }
 
         //dont use yet!
-        public async Task Close()
+        private async Task Close()
         {
             await tokenProvider.RevokeToken();
         }
 
-        private async Task<User> GetMe()
+        public async Task<User> GetMe()
         {
             await tokenProvider.RefreshClient();
             var response = await httpClient.GetAsync($@"{oauthUri}/api/v1/me");

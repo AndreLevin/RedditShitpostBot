@@ -21,7 +21,6 @@ namespace RedditApi
         private string Username;
         private string Password;
         private AccessToken accessToken;
-        
 
         internal AccessTokenProvider(HttpClient apiRequestClient, string username, string password)
         {
@@ -40,7 +39,6 @@ namespace RedditApi
             ApiRequestClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", @"windows:CockPosts:v1.0.0 (by /user/CockPostBot)");
         }
 
-
         private async Task<AccessToken> GetValidAccessToken()
         {
             if (IsTokenValid())
@@ -53,17 +51,10 @@ namespace RedditApi
                 accessToken = await GetNewAccessTokenAsync();
 
                 if (!IsTokenValid())
-                {//try catch später?
-                    //System.Threading.Thread.Sleep(1000);
-                    //accessToken = await GetValidAccessToken();
-                    //accessToken.Save(defaultFilePath);
-
                     throw new Exception("Error retrieving valid access token");
-                }
                 else
                     accessToken.Save(defaultFilePath);
             }
-
 
             return accessToken;
         }
@@ -77,6 +68,7 @@ namespace RedditApi
                     {"password", Password},
                     {"scope", "*"}
                 };
+
             HttpResponseMessage tokenResponse = await TokenProviderClient.PostAsync(RequestUri, new FormUrlEncodedContent(form));
             var tok = await HttpHelper.HttpResponseToObject<AccessToken>(tokenResponse);
             return tok;

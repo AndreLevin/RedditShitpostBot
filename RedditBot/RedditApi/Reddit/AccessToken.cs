@@ -39,11 +39,7 @@ namespace RedditApi.Reddit
         [JsonProperty("ExpirationDateTime")]
         public DateTime ExpirationDateTime { get; private set; }
 
-        public bool IsValid()
-        {
-            bool ret=  DateTime.Now < ExpirationDateTime.AddMinutes(-10) && !string.IsNullOrEmpty(Token);
-            return ret;
-        }
+        public bool IsValid()=> DateTime.Now < ExpirationDateTime.AddMinutes(-10) && !string.IsNullOrEmpty(Token);
 
         public void Save(string filename)
         {

@@ -18,6 +18,8 @@ namespace RedditApi
         private RedditClient Client;
         private string subname;
         private int _CheckInterval;
+        private TimeSpan checkTimeSpan;
+
         /// <summary>
         /// interval of the watcher checking for new posts in seconds. everything under 5 will be set to 5.
         /// </summary>
@@ -30,8 +32,6 @@ namespace RedditApi
                 checkTimeSpan = new TimeSpan(0, 0, value);
             }
         }
-        
-        private TimeSpan checkTimeSpan;
 
         public SubredditWatcher(string subredditName, RedditClient watcherClient)
         {
